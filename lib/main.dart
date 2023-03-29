@@ -51,7 +51,7 @@ class MyAppState extends State<MyApp> {
     );
   }
 }
-
+//redirected page
 class Nextpage extends StatelessWidget {
   const Nextpage({Key? key}) : super(key: key);
 
