@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screen/home.dart';
 
 void main() {
   runApp( const MaterialApp(
-    home:  MyApp(),
+    home: const MyApp(),
   ));
 }
 
@@ -64,7 +65,7 @@ class MyAppState extends State<MyApp> {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text('ALERT'),
-                      content: Text('You are redirected to next page'),
+                      content: Text('You are about to view the customer details'),
                       actions: [
                         TextButton(onPressed: ()=> Navigator.pop(context),
                           child: Text('OK'),)
@@ -118,18 +119,19 @@ class _NextpageState extends State<Nextpage> {
   @override
   Widget build(BuildContext context) {
     print('build() called');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('hello there'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('TO 1st page'),
-        ),
-      ),
-    );
+    return HomeScreen();
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('hello there'),
+    //   ),
+    //   body: Center(
+    //     child: ElevatedButton(
+    //       onPressed: () {
+    //         Navigator.pop(context);
+    //       },
+    //       child: Text('TO 1st page'),
+    //     ),
+    //   ),
+    // );
   }
 }
