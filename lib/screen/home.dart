@@ -1,17 +1,22 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:untitled1/model/user.dart';
+import 'package:untitled1/services/user_api.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
-  List<dynamic> users = [];
+  List<User> users = [];
 
+  @override
+  void initState(){
+    super.initState();
+    fetchUsers();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,65 +28,25 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: users.length,
           itemBuilder: (context, index) {
             final user = users[index];
-            final email = user['email'];
-            final firstname = user['name']['first'];
-            final lastname = user['name']['last'];
-            final name = '$firstname $lastname';
-            final picture = user['picture']['large'];
-            final gender = user['gender'];
-            final int ind = index +1;
             return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(picture),
-
-                radius: 25.0,
-              ),
-              // tileColor: Colors.black,
-              title: Text('$ind. $name - $gender'),
-              subtitle: Text(email),
+              title: Text('${index + 1}.${user.fullname}'),
+              subtitle: Text(user.phone),
             );
           },
         ),
       ),
-      /*bottomNavigationBar: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('TO 1st page'),
-              ),
-            ),
-          ),
-        ],
-      ),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           fetchUsers();
         },
         child: const Icon(Icons.refresh),
       ),
-
     );
   }
-
-
-  void fetchUsers() async {
-    print('called');
-    const url = 'https://randomuser.me/api/?results=100';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
+  Future<void> fetchUsers()async{
+    final response = await UserApi.fetchUsers();
     setState(() {
-      users = json['results'];
+      users = response;
     });
-    print('fetchUsers completed');
   }
 }
-
