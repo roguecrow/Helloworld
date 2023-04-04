@@ -28,10 +28,21 @@ class _GraphQlPageState extends State<GraphQlPage> {
               return Card(
                 child: ListTile(
                   title: Text(
-                    characters[index]['id'],
-                  ),
-                  subtitle:  Text(
                     characters[index]['username'],
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'ID: ${characters[index]['id']}',
+                      ),
+                      Text(
+                        'Mobile Number: ${characters[index]['Mobile_Number']}',
+                      ),
+                      Text(
+                        'Age: ${characters[index]['age']}',
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -54,7 +65,7 @@ class _GraphQlPageState extends State<GraphQlPage> {
     });
 
     HttpLink link =
-    HttpLink("https://3f31-103-113-190-50.in.ngrok.io/v1/graphql");
+    HttpLink("https://4a37-103-113-190-57.in.ngrok.io/v1/graphql");
     GraphQLClient qlClient = GraphQLClient(
 
       link: link,
